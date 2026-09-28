@@ -10,17 +10,19 @@ import Observation
     static let shared = AuthManager()
     private init() {}
 
-    var token: String?
-    var isAuthenticated: Bool { token != nil }
+    // La session est portée par le cookie HttpOnly PLANEO_SID posé par le gateway
+    // (stocké automatiquement dans HTTPCookieStorage.shared) : plus de JWT côté client.
+    var isAuthenticated = false
 
     func login(username: String, password: String) async throws {
-        let response: LoginResponse = try await APIClient.shared.request(
+        let _: LoginResponse = try await APIClient.shared.request(
             .login(username: username, password: password)
         )
-        self.token = response.accessToken
+        isAuthenticated = true
     }
 
     func logout() {
-        token = nil
+        isAuthenticated = false
+        Task { await APIClient.shared.logout() }
     }
 }
