@@ -30,7 +30,7 @@ struct SideDrawer: View {
                 .frame(width: width)
                 .frame(maxHeight: .infinity)
                 .background(Theme.surface)
-                .clipShape(.rect(topTrailingRadius: 0, bottomTrailingRadius: 0))
+                .clipShape(.rect(bottomTrailingRadius: 0, topTrailingRadius: 0))
                 .shadow(color: .black.opacity(0.18), radius: 40, x: 8)
                 .offset(x: appState.drawerOpen ? 0 : -(width + 60))
                 .ignoresSafeArea(edges: .vertical)

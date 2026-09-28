@@ -1,0 +1,635 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		03CF06D1E070999A7AAA65BD /* PlaneoWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740239A88023FC8B765678E7 /* PlaneoWidgetBundle.swift */; };
+		065A9EE5CEF9060AD9B4455C /* PlaneoMobileApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F257C2188815D7E6CD76CCE8 /* PlaneoMobileApp.swift */; };
+		1CE306A13A8A497DA10F0271 /* AppHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464DD0EE2D404BD20A4F446B /* AppHeader.swift */; };
+		2743CA3DE8466A7DACEBB07B /* PlaneoModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A19B23C79AE381BF007BE9 /* PlaneoModels.swift */; };
+		2A000749F69324769F95DC29 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4D4F5DB382A8FD9240DA83 /* DashboardViewModel.swift */; };
+		2D18CC9D3C3FE38C3275637C /* SideDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D005CBA0265AD0B8B64AC /* SideDrawer.swift */; };
+		2F992988E1629A19E30F34E4 /* PlaneoNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1363D33A9C3C1C8F8922A17 /* PlaneoNetworking.swift */; };
+		35FB601A19ABD4B6AFF4D877 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AD9294E5EB50BC70628DAF /* AppState.swift */; };
+		39540445205313DD9A2A0139 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E34A5819AFB51751D5CFBFB /* DashboardView.swift */; };
+		3C4CA21394E0AB488866CB1E /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0562B826441E13418BC0465C /* AuthManager.swift */; };
+		3E47B81738EB0633AFF6879E /* SharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528B458046B8A00FD8A5370B /* SharedStore.swift */; };
+		4313F33ED9ACAA2C3F19FF8F /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AF62F62EC5852E9A471361 /* APIEndpoint.swift */; };
+		4B86CBF9B25FD124AEF1D5F3 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65052722A16322E3711A78E2 /* CalendarView.swift */; };
+		5C73847F8059AA6762F48437 /* ExpensesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40BA1FB24225E9295E2D6374 /* ExpensesViewModel.swift */; };
+		61452FA25ABE301C6297BFB7 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B93B4E3682743FCA8E190B /* LoginView.swift */; };
+		638EE8B0D40754BAF58B5930 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FFACB593942BD311F4237F /* CalendarViewModel.swift */; };
+		6E03A4AFAE4CC0283C417105 /* AddExpenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736061C2D342C6F41F524B57 /* AddExpenseView.swift */; };
+		843CCB995E1120291233E68B /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 709BA8B1CC13D63C31110B81 /* RootView.swift */; };
+		8CF4BDB603103B1A7DBC92C0 /* AddExpenseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994B28BB1E2B4C17878D1644 /* AddExpenseViewModel.swift */; };
+		B4A83A87D39F9B56097EABFB /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832D9F67FE020E7065CDD21F /* LoginViewModel.swift */; };
+		B96F4C8A4A6604DDD53CB31F /* PlaneoWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8ACD7B6F4CF6A01B7F37F99B /* PlaneoWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BFEB33CFA019D0DCAA502AEE /* PlaneoComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850328EFACC4327A067CE980 /* PlaneoComponents.swift */; };
+		CCBEDD9CEFC9866D529A17E7 /* PlaneoCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080DB6785C14A2DAE7EC5604 /* PlaneoCharts.swift */; };
+		D1323E014D674ABF13E169CF /* ExpensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327A88739915AB7867E9455E /* ExpensesView.swift */; };
+		D3273767D7285A7EC145154E /* PlaneoTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579E3C8E5F6D61A5B4D2046B /* PlaneoTheme.swift */; };
+		E4117C6BD5D957045CBB3C99 /* SharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528B458046B8A00FD8A5370B /* SharedStore.swift */; };
+		EDD147B9259510F1B59DCE1D /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4484BC6C720B152B1E959024 /* APIClient.swift */; };
+		FE71854B03C0B0AA7476C959 /* PlaneoWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68701B732DC683FBAE48244C /* PlaneoWidget.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E44B8F27FBEDA6E267C1F79A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A178C34C8B9D28404FC3101A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C13C39852CABE8BD26B9D746;
+			remoteInfo = PlaneoWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		ED31155FE009C19E5A009E37 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B96F4C8A4A6604DDD53CB31F /* PlaneoWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0562B826441E13418BC0465C /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		080DB6785C14A2DAE7EC5604 /* PlaneoCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneoCharts.swift; sourceTree = "<group>"; };
+		0B9AAAB75D1391F81024F262 /* planeo-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "planeo-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E4D4F5DB382A8FD9240DA83 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
+		26FFACB593942BD311F4237F /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
+		327A88739915AB7867E9455E /* ExpensesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesView.swift; sourceTree = "<group>"; };
+		40BA1FB24225E9295E2D6374 /* ExpensesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesViewModel.swift; sourceTree = "<group>"; };
+		4484BC6C720B152B1E959024 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		464DD0EE2D404BD20A4F446B /* AppHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHeader.swift; sourceTree = "<group>"; };
+		528B458046B8A00FD8A5370B /* SharedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedStore.swift; sourceTree = "<group>"; };
+		579E3C8E5F6D61A5B4D2046B /* PlaneoTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneoTheme.swift; sourceTree = "<group>"; };
+		65052722A16322E3711A78E2 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		68701B732DC683FBAE48244C /* PlaneoWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneoWidget.swift; sourceTree = "<group>"; };
+		709BA8B1CC13D63C31110B81 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		736061C2D342C6F41F524B57 /* AddExpenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseView.swift; sourceTree = "<group>"; };
+		740239A88023FC8B765678E7 /* PlaneoWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneoWidgetBundle.swift; sourceTree = "<group>"; };
+		76AD9294E5EB50BC70628DAF /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		77AF62F62EC5852E9A471361 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
+		832D9F67FE020E7065CDD21F /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		850328EFACC4327A067CE980 /* PlaneoComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneoComponents.swift; sourceTree = "<group>"; };
+		8ACD7B6F4CF6A01B7F37F99B /* PlaneoWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PlaneoWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E34A5819AFB51751D5CFBFB /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		994B28BB1E2B4C17878D1644 /* AddExpenseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseViewModel.swift; sourceTree = "<group>"; };
+		A9A19B23C79AE381BF007BE9 /* PlaneoModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneoModels.swift; sourceTree = "<group>"; };
+		B1363D33A9C3C1C8F8922A17 /* PlaneoNetworking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneoNetworking.swift; sourceTree = "<group>"; };
+		E3B93B4E3682743FCA8E190B /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		E96D005CBA0265AD0B8B64AC /* SideDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideDrawer.swift; sourceTree = "<group>"; };
+		F257C2188815D7E6CD76CCE8 /* PlaneoMobileApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneoMobileApp.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		010A7477700D37190BCA836C /* App */ = {
+			isa = PBXGroup;
+			children = (
+				F257C2188815D7E6CD76CCE8 /* PlaneoMobileApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		092C0DE5C87126578CD61415 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A9A19B23C79AE381BF007BE9 /* PlaneoModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1A6CCE9ECB3CBF4577ED58A7 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				96B90677A562E4D6A941B74F /* AddExpense */,
+				461C4798324DAAE77CFF45B1 /* Calendar */,
+				8217FE98E6D98F4CA0491020 /* Dashboard */,
+				9218C97B1B7008F231932FCE /* Expenses */,
+				7482048EF39529A187F22B21 /* Login */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		1CA97899904E31B33682D530 /* PlaneoWidget */ = {
+			isa = PBXGroup;
+			children = (
+				68701B732DC683FBAE48244C /* PlaneoWidget.swift */,
+				740239A88023FC8B765678E7 /* PlaneoWidgetBundle.swift */,
+			);
+			path = PlaneoWidget;
+			sourceTree = "<group>";
+		};
+		1D11382BE5C1375A1B2BE60D /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				579E3C8E5F6D61A5B4D2046B /* PlaneoTheme.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		461C4798324DAAE77CFF45B1 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				65052722A16322E3711A78E2 /* CalendarView.swift */,
+				26FFACB593942BD311F4237F /* CalendarViewModel.swift */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		4DD51617DC42094497E2F8DA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0B9AAAB75D1391F81024F262 /* planeo-app.app */,
+				8ACD7B6F4CF6A01B7F37F99B /* PlaneoWidgetExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4F4FDA40FEDC40E7DF6B67DF /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				0562B826441E13418BC0465C /* AuthManager.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		6B07939C764BD8E63BDB8976 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				464DD0EE2D404BD20A4F446B /* AppHeader.swift */,
+				76AD9294E5EB50BC70628DAF /* AppState.swift */,
+				709BA8B1CC13D63C31110B81 /* RootView.swift */,
+				E96D005CBA0265AD0B8B64AC /* SideDrawer.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		7482048EF39529A187F22B21 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				E3B93B4E3682743FCA8E190B /* LoginView.swift */,
+				832D9F67FE020E7065CDD21F /* LoginViewModel.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		7974C820140FD4BF6E13A9A4 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				4F4FDA40FEDC40E7DF6B67DF /* Auth */,
+				092C0DE5C87126578CD61415 /* Models */,
+				E60307D10BB7D4643B8EB517 /* Networking */,
+				1D11382BE5C1375A1B2BE60D /* Theme */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		8217FE98E6D98F4CA0491020 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				8E34A5819AFB51751D5CFBFB /* DashboardView.swift */,
+				1E4D4F5DB382A8FD9240DA83 /* DashboardViewModel.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		888A396D00C95A3E0E5C0BAD /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				528B458046B8A00FD8A5370B /* SharedStore.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		9218C97B1B7008F231932FCE /* Expenses */ = {
+			isa = PBXGroup;
+			children = (
+				327A88739915AB7867E9455E /* ExpensesView.swift */,
+				40BA1FB24225E9295E2D6374 /* ExpensesViewModel.swift */,
+			);
+			path = Expenses;
+			sourceTree = "<group>";
+		};
+		96B90677A562E4D6A941B74F /* AddExpense */ = {
+			isa = PBXGroup;
+			children = (
+				736061C2D342C6F41F524B57 /* AddExpenseView.swift */,
+				994B28BB1E2B4C17878D1644 /* AddExpenseViewModel.swift */,
+			);
+			path = AddExpense;
+			sourceTree = "<group>";
+		};
+		A66FB62E46A6F90AF73BAC38 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				E8823EF26F25289F350E4602 /* Components */,
+				6B07939C764BD8E63BDB8976 /* Navigation */,
+				888A396D00C95A3E0E5C0BAD /* Storage */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		CBF9D0D976B7CE35FDB1BB3C /* planeo-app */ = {
+			isa = PBXGroup;
+			children = (
+				010A7477700D37190BCA836C /* App */,
+				7974C820140FD4BF6E13A9A4 /* Core */,
+				1A6CCE9ECB3CBF4577ED58A7 /* Features */,
+				A66FB62E46A6F90AF73BAC38 /* Shared */,
+			);
+			path = "planeo-app";
+			sourceTree = "<group>";
+		};
+		E11FE62D5A975741F1E21EAF = {
+			isa = PBXGroup;
+			children = (
+				CBF9D0D976B7CE35FDB1BB3C /* planeo-app */,
+				1CA97899904E31B33682D530 /* PlaneoWidget */,
+				4DD51617DC42094497E2F8DA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E60307D10BB7D4643B8EB517 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				4484BC6C720B152B1E959024 /* APIClient.swift */,
+				77AF62F62EC5852E9A471361 /* APIEndpoint.swift */,
+				B1363D33A9C3C1C8F8922A17 /* PlaneoNetworking.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		E8823EF26F25289F350E4602 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				080DB6785C14A2DAE7EC5604 /* PlaneoCharts.swift */,
+				850328EFACC4327A067CE980 /* PlaneoComponents.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2DAECB8F1654A8BD189AFA2D /* planeo-app */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CF2849D6CBDF6F6F89FF16CE /* Build configuration list for PBXNativeTarget "planeo-app" */;
+			buildPhases = (
+				06D8ECC67C5E4D8D22602329 /* Sources */,
+				ED31155FE009C19E5A009E37 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9DF3A39A248BE8E373D6B842 /* PBXTargetDependency */,
+			);
+			name = "planeo-app";
+			packageProductDependencies = (
+			);
+			productName = "planeo-app";
+			productReference = 0B9AAAB75D1391F81024F262 /* planeo-app.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C13C39852CABE8BD26B9D746 /* PlaneoWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5A40B558079B2608BB37262A /* Build configuration list for PBXNativeTarget "PlaneoWidgetExtension" */;
+			buildPhases = (
+				3E9145846E2C8FB0828E45ED /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PlaneoWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = PlaneoWidgetExtension;
+			productReference = 8ACD7B6F4CF6A01B7F37F99B /* PlaneoWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A178C34C8B9D28404FC3101A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+			};
+			buildConfigurationList = 2AE0F068ED5D9C5613BFA6B5 /* Build configuration list for PBXProject "PlaneoMobile" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = E11FE62D5A975741F1E21EAF;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 4DD51617DC42094497E2F8DA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2DAECB8F1654A8BD189AFA2D /* planeo-app */,
+				C13C39852CABE8BD26B9D746 /* PlaneoWidgetExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		06D8ECC67C5E4D8D22602329 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDD147B9259510F1B59DCE1D /* APIClient.swift in Sources */,
+				4313F33ED9ACAA2C3F19FF8F /* APIEndpoint.swift in Sources */,
+				6E03A4AFAE4CC0283C417105 /* AddExpenseView.swift in Sources */,
+				8CF4BDB603103B1A7DBC92C0 /* AddExpenseViewModel.swift in Sources */,
+				1CE306A13A8A497DA10F0271 /* AppHeader.swift in Sources */,
+				35FB601A19ABD4B6AFF4D877 /* AppState.swift in Sources */,
+				3C4CA21394E0AB488866CB1E /* AuthManager.swift in Sources */,
+				4B86CBF9B25FD124AEF1D5F3 /* CalendarView.swift in Sources */,
+				638EE8B0D40754BAF58B5930 /* CalendarViewModel.swift in Sources */,
+				39540445205313DD9A2A0139 /* DashboardView.swift in Sources */,
+				2A000749F69324769F95DC29 /* DashboardViewModel.swift in Sources */,
+				D1323E014D674ABF13E169CF /* ExpensesView.swift in Sources */,
+				5C73847F8059AA6762F48437 /* ExpensesViewModel.swift in Sources */,
+				61452FA25ABE301C6297BFB7 /* LoginView.swift in Sources */,
+				B4A83A87D39F9B56097EABFB /* LoginViewModel.swift in Sources */,
+				CCBEDD9CEFC9866D529A17E7 /* PlaneoCharts.swift in Sources */,
+				BFEB33CFA019D0DCAA502AEE /* PlaneoComponents.swift in Sources */,
+				065A9EE5CEF9060AD9B4455C /* PlaneoMobileApp.swift in Sources */,
+				2743CA3DE8466A7DACEBB07B /* PlaneoModels.swift in Sources */,
+				2F992988E1629A19E30F34E4 /* PlaneoNetworking.swift in Sources */,
+				D3273767D7285A7EC145154E /* PlaneoTheme.swift in Sources */,
+				843CCB995E1120291233E68B /* RootView.swift in Sources */,
+				E4117C6BD5D957045CBB3C99 /* SharedStore.swift in Sources */,
+				2D18CC9D3C3FE38C3275637C /* SideDrawer.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3E9145846E2C8FB0828E45ED /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FE71854B03C0B0AA7476C959 /* PlaneoWidget.swift in Sources */,
+				03CF06D1E070999A7AAA65BD /* PlaneoWidgetBundle.swift in Sources */,
+				3E47B81738EB0633AFF6879E /* SharedStore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9DF3A39A248BE8E373D6B842 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C13C39852CABE8BD26B9D746 /* PlaneoWidgetExtension */;
+			targetProxy = E44B8F27FBEDA6E267C1F79A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		28F874E127A619A3F0F65B03 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "planeo-app/App/planeo-app.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 5BB2KB39HR;
+				INFOPLIST_FILE = "planeo-app/App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.planeo.planeo-app";
+				PRODUCT_NAME = "planeo-app";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		336A4CC022A0DE2BB6C1FABB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = PlaneoWidget/PlaneoWidget.entitlements;
+				DEVELOPMENT_TEAM = 5BB2KB39HR;
+				INFOPLIST_FILE = PlaneoWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.planeo.planeo-app.PlaneoWidget";
+				PRODUCT_NAME = PlaneoWidgetExtension;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		620B6A52972A50214D4475E5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "planeo-app/App/planeo-app.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 5BB2KB39HR;
+				INFOPLIST_FILE = "planeo-app/App/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.planeo.planeo-app";
+				PRODUCT_NAME = "planeo-app";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		658F83556B2FE1771F128D16 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_LANGUAGE = en;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A4B08ECB4BB31892F472F194 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = PlaneoWidget/PlaneoWidget.entitlements;
+				DEVELOPMENT_TEAM = 5BB2KB39HR;
+				INFOPLIST_FILE = PlaneoWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.planeo.planeo-app.PlaneoWidget";
+				PRODUCT_NAME = PlaneoWidgetExtension;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F31F06EA0DD3EA9AB063FE44 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_LANGUAGE = en;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2AE0F068ED5D9C5613BFA6B5 /* Build configuration list for PBXProject "PlaneoMobile" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F31F06EA0DD3EA9AB063FE44 /* Debug */,
+				658F83556B2FE1771F128D16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		5A40B558079B2608BB37262A /* Build configuration list for PBXNativeTarget "PlaneoWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				336A4CC022A0DE2BB6C1FABB /* Debug */,
+				A4B08ECB4BB31892F472F194 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CF2849D6CBDF6F6F89FF16CE /* Build configuration list for PBXNativeTarget "planeo-app" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28F874E127A619A3F0F65B03 /* Debug */,
+				620B6A52972A50214D4475E5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A178C34C8B9D28404FC3101A /* Project object */;
+}

@@ -1,0 +1,73 @@
+name: PlaneoMobile
+
+options:
+  bundleIdPrefix: com.planeo
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+
+configs:
+  Debug: debug
+  Release: release
+
+settings:
+  base:
+    SWIFT_VERSION: 5.0
+    TARGETED_DEVICE_FAMILY: "1,2"
+    DEVELOPMENT_LANGUAGE: en
+
+targets:
+  planeo-app:
+    type: application
+    platform: iOS
+    sources:
+      - path: planeo-app
+        excludes:
+          - "App/Info.plist"
+          - "App/planeo-app.entitlements"
+    info:
+      path: planeo-app/App/Info.plist
+      properties:
+        LSRequiresIPhoneOS: true
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+    entitlements:
+      path: planeo-app/App/planeo-app.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.planeo.planeo-app
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.planeo.planeo-app
+        PRODUCT_NAME: planeo-app
+    dependencies:
+      - target: PlaneoWidgetExtension
+        embed: true
+
+  PlaneoWidgetExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: PlaneoWidget
+        excludes:
+          - "Info.plist"
+          - "PlaneoWidget.entitlements"
+      - path: planeo-app/Shared/Storage/SharedStore.swift
+    info:
+      path: PlaneoWidget/Info.plist
+      properties:
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    entitlements:
+      path: PlaneoWidget/PlaneoWidget.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.planeo.planeo-app
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.planeo.planeo-app.PlaneoWidget
+        PRODUCT_NAME: PlaneoWidgetExtension
+        SKIP_INSTALL: NO
