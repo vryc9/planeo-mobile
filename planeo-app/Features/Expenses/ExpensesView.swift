@@ -212,7 +212,7 @@ struct ExpensesView: View {
 
     private func expenseRow(_ e: Expense) -> some View {
         HStack(spacing: 11) {
-            IconCircle(cat: e.cat, size: 38)
+            IconCircle(cat: e.cat, catIcon: e.catIcon, size: 38)
             VStack(alignment: .leading, spacing: 4) {
                 Text(e.label)
                     .font(Theme.font(14.5, .bold))
@@ -231,6 +231,15 @@ struct ExpensesView: View {
                 .foregroundStyle(Theme.text)
         }
         .padding(.vertical, 12)
+        .contextMenu {
+            Button(role: .destructive) {
+                Task {
+                    if await viewModel.delete(e) { appState.notifyDataChanged() }
+                }
+            } label: {
+                Label("Supprimer", systemImage: "trash")
+            }
+        }
     }
 
     // MARK: - Tableau par catégorie (expandable)

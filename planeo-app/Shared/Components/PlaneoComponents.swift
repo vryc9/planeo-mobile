@@ -26,25 +26,31 @@ struct Card<Content: View>: View {
 
 struct IconCircle: View {
     var cat: String?
+    var catIcon: String?
     var icon: String?
     var color: Color?
     var bg: Color?
     var size: CGFloat = 40
 
     var body: some View {
-        let meta: CategoryMeta? = cat.map { ExpenseCategory.meta(for: $0) }
+        let meta: CategoryMeta? = cat.map { ExpenseCategory.meta(for: $0, icon: catIcon) }
         let bgColor = bg ?? meta?.color.tint(0.78) ?? Theme.accentSoft
         let fgColor = color ?? meta?.color ?? Theme.accent
-        let iconName = icon ?? meta?.icon ?? "questionmark"
+        let iconName = icon ?? meta?.icon ?? "tag"
+        let emoji: String? = (icon == nil && catIcon.map(CategoryIcon.isEmoji) == true) ? catIcon : nil
 
         Circle()
             .fill(bgColor)
             .frame(width: size, height: size)
-            .overlay(
-                Image(systemName: iconName)
-                    .font(.system(size: size * 0.42, weight: .semibold))
-                    .foregroundStyle(fgColor)
-            )
+            .overlay {
+                if let emoji {
+                    Text(emoji).font(.system(size: size * 0.46))
+                } else {
+                    Image(systemName: iconName)
+                        .font(.system(size: size * 0.42, weight: .semibold))
+                        .foregroundStyle(fgColor)
+                }
+            }
     }
 }
 

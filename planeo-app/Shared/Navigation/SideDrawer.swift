@@ -85,32 +85,38 @@ struct SideDrawer: View {
             Spacer()
 
             // Compte
-            HStack(spacing: 11) {
-                Circle()
-                    .fill(Theme.accent.shade(0.1))
-                    .frame(width: 38, height: 38)
-                    .overlay(
-                        Image(systemName: "person.fill")
-                            .font(.system(size: 16, weight: .semibold))
-                            .foregroundStyle(.white)
-                    )
-                VStack(alignment: .leading, spacing: 1) {
-                    Text("Mon compte")
-                        .font(Theme.font(13.5, .bold))
-                        .foregroundStyle(Theme.text)
-                    Text("Gérer le profil")
-                        .font(Theme.font(11.5))
-                        .foregroundStyle(Theme.muted)
+            Button {
+                withAnimation { appState.drawerOpen = false }
+                appState.screen = .dashboard
+                AuthManager.shared.logout()
+            } label: {
+                HStack(spacing: 11) {
+                    Circle()
+                        .fill(Theme.accent.shade(0.1))
+                        .frame(width: 38, height: 38)
+                        .overlay(
+                            Image(systemName: "person.fill")
+                                .font(.system(size: 16, weight: .semibold))
+                                .foregroundStyle(.white)
+                        )
+                    VStack(alignment: .leading, spacing: 1) {
+                        Text("Se déconnecter")
+                            .font(Theme.font(13.5, .bold))
+                            .foregroundStyle(Theme.text)
+                        Text("Fermer la session")
+                            .font(Theme.font(11.5))
+                            .foregroundStyle(Theme.muted)
+                    }
+                    Spacer()
+                    Image(systemName: "rectangle.portrait.and.arrow.right")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(Theme.faint)
                 }
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(Theme.faint)
+                .padding(14)
+                .background(Theme.surfaceAlt)
+                .clipShape(RoundedRectangle(cornerRadius: Theme.radiusSm, style: .continuous))
+                .padding(12)
             }
-            .padding(14)
-            .background(Theme.surfaceAlt)
-            .clipShape(RoundedRectangle(cornerRadius: Theme.radiusSm, style: .continuous))
-            .padding(12)
         }
     }
 

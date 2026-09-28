@@ -23,6 +23,12 @@ struct RootView: View {
                 SideDrawer(width: drawerWidth)
             }
         }
+        .task {
+            // Premier lancement : aucune banque → on amène l'utilisateur sur l'écran Banques.
+            if let exist: Bool = try? await APIClient.shared.request(.accountsExist), !exist {
+                appState.screen = .accounts
+            }
+        }
         .sheet(isPresented: Binding(
             get: { appState.showAddExpense },
             set: { appState.showAddExpense = $0 }
@@ -41,6 +47,8 @@ struct RootView: View {
         case .dashboard: DashboardView()
         case .calendar:  CalendarView()
         case .expenses:  ExpensesView()
+        case .accounts:  AccountsView()
+        case .categories: CategoriesView()
         }
     }
 }

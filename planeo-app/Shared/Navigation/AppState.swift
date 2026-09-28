@@ -9,13 +9,15 @@ import Observation
 // MARK: - Screens
 
 enum AppScreen: String, CaseIterable {
-    case dashboard, calendar, expenses
+    case dashboard, calendar, expenses, accounts, categories
 
     var title: String {
         switch self {
         case .dashboard: return "Tableau de bord"
         case .calendar:  return "Calendrier"
         case .expenses:  return "Dépenses"
+        case .accounts:  return "Banques"
+        case .categories: return "Catégories"
         }
     }
 
@@ -24,6 +26,8 @@ enum AppScreen: String, CaseIterable {
         case .dashboard: return "Vue d'ensemble"
         case .calendar:  return "Planification"
         case .expenses:  return "Historique"
+        case .accounts:  return "Mes comptes"
+        case .categories: return "Organisation"
         }
     }
 
@@ -32,6 +36,8 @@ enum AppScreen: String, CaseIterable {
         case .dashboard: return "house"
         case .calendar:  return "calendar"
         case .expenses:  return "creditcard"
+        case .accounts:  return "building.columns"
+        case .categories: return "tag"
         }
     }
 
@@ -40,6 +46,8 @@ enum AppScreen: String, CaseIterable {
         case .dashboard: return "Tableau de bord"
         case .calendar:  return "Calendrier"
         case .expenses:  return "Dépenses"
+        case .accounts:  return "Banques"
+        case .categories: return "Catégories"
         }
     }
 }
