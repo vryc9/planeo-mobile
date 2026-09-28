@@ -15,6 +15,9 @@ struct Expense: Identifiable {
     let date: String   // ISO "2026-06-15"
     let label: String
     var recurring: Bool = false
+    var catIcon: String = ""
+    var categoryId: Int? = nil
+    var accountId: Int? = nil
 }
 
 enum ExpenseStatus {
@@ -29,42 +32,21 @@ enum ExpenseStatus {
     }
 }
 
-// MARK: - Tag enum (maps Java name())
+// MARK: - Catégorie (catégories dynamiques, propres à chaque utilisateur)
 
-enum Tag: String, CaseIterable, Hashable {
-    case soiree        = "SOIREE"
-    case restaurant    = "RESTAURANT"
-    case anniversaire  = "ANNIVERSAIRE"
-    case course        = "COURSE"
-    case abonnement    = "ABONNEMENT"
-    case transport     = "TRANSPORT"
-    case investissement = "INVESTISSEMENT"
-    case cinema        = "CINEMA"
-    case pharmacie     = "PHARMACIE"
-    case vetement      = "VETEMENT"
-    case coiffeur      = "COIFFEUR"
-    case logement      = "LOGEMENT"
+struct PlaneoCategory: Identifiable, Hashable {
+    let id: Int
+    let name: String
+    let icon: String
+}
 
-    var label: String {
-        switch self {
-        case .soiree:         return "Soirée"
-        case .restaurant:     return "Restaurant"
-        case .anniversaire:   return "Anniversaire"
-        case .course:         return "Course"
-        case .abonnement:     return "Abonnement"
-        case .transport:      return "Transport"
-        case .investissement: return "Investissement"
-        case .cinema:         return "Cinéma"
-        case .pharmacie:      return "Pharmacie"
-        case .vetement:       return "Vêtement"
-        case .coiffeur:       return "Coiffeur"
-        case .logement:       return "Logement"
-        }
-    }
+// MARK: - Account (banque)
 
-    static func from(_ raw: String) -> Tag? {
-        Tag(rawValue: raw.uppercased())
-    }
+struct Account: Identifiable, Hashable {
+    let id: Int
+    let label: String
+    let amount: Double
+    let logo: String
 }
 
 // MARK: - Category metadata
@@ -74,23 +56,49 @@ struct CategoryMeta {
     let icon: String
 }
 
+/// Icônes proposées à la création d'une catégorie : clé stockée côté API → SF Symbol.
+enum CategoryIcon {
+    static let options: [(key: String, symbol: String)] = [
+        ("restaurant", "fork.knife"), ("course", "cart"), ("transport", "car"),
+        ("logement", "house"), ("abonnement", "repeat"), ("cinema", "film"),
+        ("soiree", "music.note"), ("anniversaire", "gift"), ("pharmacie", "cross.case"),
+        ("vetement", "tshirt"), ("coiffeur", "scissors"), ("investissement", "chart.line.uptrend.xyaxis"),
+        ("sante", "heart"), ("sport", "figure.run"), ("voyage", "airplane"),
+        ("loisirs", "gamecontroller"), ("education", "book"), ("cadeau", "gift.fill"),
+        ("animaux", "pawprint"), ("telephone", "phone"), ("cafe", "cup.and.saucer"),
+        ("factures", "doc.text"), ("epargne", "banknote"), ("autre", "tag"),
+    ]
+
+    /// SF Symbol correspondant à la valeur `icon` renvoyée par l'API (clé connue ou nom de symbole valide).
+    static func symbol(for raw: String) -> String? {
+        let key = raw.trimmingCharacters(in: .whitespaces)
+        guard !key.isEmpty else { return nil }
+        if let match = options.first(where: { $0.key == key.lowercased() }) { return match.symbol }
+        if UIImage(systemName: key) != nil { return key }
+        return nil
+    }
+
+    static func isEmoji(_ raw: String) -> Bool {
+        guard let first = raw.unicodeScalars.first else { return false }
+        return first.properties.isEmojiPresentation || (first.properties.isEmoji && first.value > 0x238C)
+    }
+}
+
 enum ExpenseCategory {
-    static func meta(for label: String) -> CategoryMeta {
-        switch label.lowercased() {
-        case "soirée":         return CategoryMeta(color: Color(hex: "9F7AEA"), icon: "music.note")
-        case "restaurant":     return CategoryMeta(color: Color(hex: "F6AD55"), icon: "fork.knife")
-        case "anniversaire":   return CategoryMeta(color: Color(hex: "FC8181"), icon: "gift")
-        case "course":         return CategoryMeta(color: Color(hex: "68D391"), icon: "cart")
-        case "abonnement":     return CategoryMeta(color: Color(hex: "4FD1C5"), icon: "repeat")
-        case "transport":      return CategoryMeta(color: Color(hex: "63B3ED"), icon: "car")
-        case "investissement": return CategoryMeta(color: Color(hex: "48BB78"), icon: "chart.line.uptrend.xyaxis")
-        case "cinéma":         return CategoryMeta(color: Color(hex: "ED64A6"), icon: "film")
-        case "pharmacie":      return CategoryMeta(color: Color(hex: "FC8181"), icon: "cross.case")
-        case "vêtement":       return CategoryMeta(color: Color(hex: "B794F4"), icon: "tshirt")
-        case "coiffeur":       return CategoryMeta(color: Color(hex: "F6E05E"), icon: "scissors")
-        case "logement":       return CategoryMeta(color: Color(hex: "4FD1C5"), icon: "house")
-        default:               return CategoryMeta(color: Color(hex: "A0AEC0"), icon: "questionmark")
-        }
+    private static let palette = ["9F7AEA", "F6AD55", "FC8181", "68D391", "4FD1C5", "63B3ED",
+                                  "ED64A6", "B794F4", "F6E05E", "48BB78", "F687B3", "7F9CF5"]
+
+    /// Couleur stable dérivée du nom (les catégories n'étant plus une liste fixe).
+    private static func color(for label: String) -> Color {
+        let h = label.lowercased().unicodeScalars.reduce(UInt(5381)) { ($0 &* 33) &+ UInt($1.value) }
+        return Color(hex: palette[Int(h % UInt(palette.count))])
+    }
+
+    static func meta(for label: String, icon: String? = nil) -> CategoryMeta {
+        let symbol = icon.flatMap(CategoryIcon.symbol(for:))
+            ?? CategoryIcon.symbol(for: label.folding(options: .diacriticInsensitive, locale: nil))
+            ?? "tag"
+        return CategoryMeta(color: color(for: label), icon: symbol)
     }
 }
 

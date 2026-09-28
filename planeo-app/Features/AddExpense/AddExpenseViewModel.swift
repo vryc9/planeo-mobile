@@ -8,7 +8,10 @@ import Observation
 
 @Observable final class AddExpenseViewModel {
     var isIncome = false
-    var selectedTag: Tag?
+    var categories: [PlaneoCategory] = []
+    var accounts: [Account] = []
+    var selectedCategory: PlaneoCategory?
+    var selectedAccountId: Int?
     var label = ""
     var amountText = ""
     var date = Date()
@@ -27,8 +30,25 @@ import Observation
     var isValid: Bool {
         let hasAmount = amount != nil
         let hasLabel  = !label.trimmingCharacters(in: .whitespaces).isEmpty
-        // En mode revenu : seul le montant est obligatoire
-        return isIncome ? hasAmount : (hasLabel && hasAmount && selectedTag != nil)
+        let hasAccount = selectedAccountId != nil
+        // Revenu : montant + banque à créditer ; dépense : libellé, montant, catégorie, banque
+        return isIncome ? (hasAmount && hasAccount)
+                        : (hasLabel && hasAmount && selectedCategory != nil && hasAccount)
+    }
+
+    // MARK: - Chargement des listes (catégories, banques)
+
+    func load() async {
+        async let cats: [CategoryDTO] = APIClient.shared.request(.categories)
+        async let accs: [AccountDTO]  = APIClient.shared.request(.accounts)
+        do {
+            let (c, a) = try await (cats, accs)
+            categories = c.compactMap { $0.toCategory() }
+            accounts = a.map { $0.toAccount() }
+            if selectedAccountId == nil { selectedAccountId = accounts.first?.id }
+        } catch {
+            errorMessage = error.localizedDescription
+        }
     }
 
     // MARK: - Submit
@@ -39,13 +59,15 @@ import Observation
     }
 
     private func submitIncome() async -> Bool {
-        guard let a = amount else { return false }
+        guard let a = amount, let accountId = selectedAccountId else { return false }
         isSubmitting = true
         errorMessage = nil
         defer { isSubmitting = false }
         do {
-            // PUT /api/balance — corps = BigDecimal brut
-            let _: BalanceDTO = try await APIClient.shared.request(.updateBalance(amount: a))
+            // PUT /api/balance — crédite la banque choisie
+            let _: BalanceDTO = try await APIClient.shared.request(
+                .deposit(body: DepositRequest(amount: a, accountId: accountId))
+            )
             return true
         } catch {
             errorMessage = error.localizedDescription
@@ -54,7 +76,7 @@ import Observation
     }
 
     private func submitExpense() async -> Bool {
-        guard let a = amount, let tag = selectedTag else { return false }
+        guard let a = amount, let category = selectedCategory else { return false }
         isSubmitting = true
         errorMessage = nil
         defer { isSubmitting = false }
@@ -66,11 +88,12 @@ import Observation
 
         let body = ExpenseCreateRequest(
             amount: a,
-            tag: tag.rawValue,
+            category: CategoryDTO(id: category.id, name: category.name, icon: category.icon),
             status: status,
             date: Format.isoDate(date),
             label: label.trimmingCharacters(in: .whitespaces),
-            recurring: false
+            recurring: false,
+            accountId: selectedAccountId
         )
         do {
             let _: ExpenseDTO = try await APIClient.shared.request(.createExpense(body: body))

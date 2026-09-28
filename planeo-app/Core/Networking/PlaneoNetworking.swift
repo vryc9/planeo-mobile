@@ -9,8 +9,10 @@ import Foundation
 
 // MARK: - Auth
 
+// Le gateway ne renvoie plus de JWT : uniquement l'utilisateur, la session est dans un cookie.
 struct LoginResponse: Decodable {
-    let accessToken: String
+    let username: String
+    let role: String
 }
 
 // MARK: - Balance
@@ -22,27 +24,78 @@ nonisolated struct BalanceDTO: Decodable {
     let pendingExpense: Double
 }
 
+// MARK: - Category
+
+nonisolated struct CategoryDTO: Codable {
+    let id: Int?
+    let name: String
+    let icon: String
+
+    func toCategory() -> PlaneoCategory? {
+        guard let id else { return nil }
+        return PlaneoCategory(id: id, name: name, icon: icon)
+    }
+}
+
+nonisolated struct CategoryCreateRequest: Encodable {
+    let name: String
+    let icon: String
+}
+
+// MARK: - Account (banque)
+
+nonisolated struct AccountDTO: Decodable {
+    let id: Int
+    let label: String
+    let amount: Double
+    let logo: String?
+
+    func toAccount() -> Account {
+        Account(id: id, label: label, amount: amount, logo: logo ?? "")
+    }
+}
+
+nonisolated struct AccountCreateRequest: Encodable {
+    let label: String
+    let amount: Double
+    let logo: String
+}
+
+nonisolated struct TransferRequest: Encodable {
+    let accountOriginId: Int
+    let accountTargetId: Int
+    let amount: Double
+}
+
+nonisolated struct DepositRequest: Encodable {
+    let amount: Double
+    let accountId: Int
+}
+
 // MARK: - Expense
 
-nonisolated struct ExpenseDTO: Decodable {
+nonisolated struct ExpenseDTO: Codable {
     let id: Int
     let amount: Double
-    let tag: String
+    let category: CategoryDTO
     let status: String
     let date: String
     let label: String
     let recurring: Bool
+    let accountId: Int?
 
     func toExpense() -> Expense {
-        let cat = Tag.from(tag)?.label ?? tag
-        return Expense(
+        Expense(
             id: id,
             amount: amount,
-            cat: cat,
+            cat: category.name,
             status: ExpenseStatus.from(status),
             date: date,
             label: label,
-            recurring: recurring
+            recurring: recurring,
+            catIcon: category.icon,
+            categoryId: category.id,
+            accountId: accountId
         )
     }
 }
@@ -52,23 +105,19 @@ nonisolated struct ExpensePerMonthDTO: Decodable {
     let amount: Double
 }
 
-nonisolated struct ExpenseAmountByTagDTO: Decodable {
-    let tag: String
+nonisolated struct ExpenseAmountByCategoryDTO: Decodable {
+    let category: CategoryDTO
     let total: Double
-}
-
-nonisolated struct ExpensesByTagsDTO: Decodable {
-    let tag: String
-    let expenses: [ExpenseDTO]
 }
 
 // MARK: - Create expense body
 
 nonisolated struct ExpenseCreateRequest: Encodable {
     let amount: Double
-    let tag: String       // Java name() e.g. "RESTAURANT"
+    let category: CategoryDTO
     let status: String    // "PROCESSED" ou "PENDING"
     let date: String      // "yyyy-MM-dd"
     let label: String
     let recurring: Bool
+    let accountId: Int?
 }
