@@ -1,0 +1,320 @@
+//
+//  AddExpenseView.swift
+//  planeo-app
+//
+//  Modal "Nouvelle dépense" repris de modals.jsx (FormModal, mode create).
+//
+
+import SwiftUI
+
+struct AddExpenseView: View {
+    @Environment(AppState.self) private var appState
+    @Environment(\.dismiss) private var dismiss
+    @State private var viewModel = AddExpenseViewModel()
+
+    @State private var showCategories = false
+    @State private var showDatePicker = false
+    
+    init(isIncome: Bool, presetDate: Date?) {
+            let vm = AddExpenseViewModel()
+            vm.isIncome = isIncome
+            if let presetDate { vm.date = presetDate }
+            _viewModel = State(initialValue: vm)
+        }
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 14) {
+                header
+
+                if viewModel.isIncome {
+                    incomeBanner
+                    amountField
+                } else {
+                    tagField
+                    Field(label: "Libellé") {
+                        TextField("Ex: Netflix", text: $viewModel.label)
+                            .font(Theme.font(14.5))
+                            .padding(.horizontal, 13)
+                            .frame(height: 46)
+                            .background(Theme.surface)
+                            .overlay(roundedBorder)
+                            .clipShape(RoundedRectangle(cornerRadius: Theme.radiusSm, style: .continuous))
+                    }
+                    HStack(spacing: 12) {
+                        dateField
+                        amountField
+                    }
+                }
+
+                if let error = viewModel.errorMessage {
+                    Text(error)
+                        .font(Theme.font(13))
+                        .foregroundStyle(.red)
+                }
+
+                buttons
+                    .padding(.top, 6)
+            }
+            .padding(.horizontal, 18)
+            .padding(.top, 6)
+            .padding(.bottom, 24)
+        }
+    }
+
+    // MARK: - Bandeau entrée d'argent
+
+    private var incomeBanner: some View {
+        HStack(spacing: 11) {
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(Theme.accent.tint(0.7))
+                .frame(width: 40, height: 40)
+                .overlay(
+                    Image(systemName: "arrow.up")
+                        .font(.system(size: 17, weight: .bold))
+                        .foregroundStyle(Theme.accentDark)
+                )
+            Text("Entrée d'argent — vient augmenter votre solde")
+                .font(Theme.font(13.5, .semibold))
+                .foregroundStyle(Theme.accentDark)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(14)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Theme.accentSoft)
+        .overlay(
+            RoundedRectangle(cornerRadius: Theme.radiusSm, style: .continuous)
+                .stroke(Theme.accentBorder, lineWidth: 1)
+        )
+        .clipShape(RoundedRectangle(cornerRadius: Theme.radiusSm, style: .continuous))
+    }
+
+    // MARK: - Header
+
+    private var header: some View {
+        HStack(spacing: 12) {
+            RoundedRectangle(cornerRadius: Theme.radiusSm, style: .continuous)
+                .fill(Theme.accentSoft)
+                .frame(width: 44, height: 44)
+                .overlay(
+                    Image(systemName: viewModel.isIncome ? "arrow.up" : "wallet.bifold")
+                        .font(.system(size: 20, weight: .semibold))
+                        .foregroundStyle(Theme.accentDark)
+                )
+            VStack(alignment: .leading, spacing: 1) {
+                Text(viewModel.isIncome ? "Nouvelle entrée" : "Nouvelle dépense")
+                    .font(Theme.font(18, .heavy))
+                    .foregroundStyle(Theme.text)
+                Text(viewModel.isIncome ? "Enregistrer une entrée d'argent" : "Dépense ponctuelle")
+                    .font(Theme.font(12.5))
+                    .foregroundStyle(Theme.muted)
+            }
+            Spacer()
+            Button { dismiss() } label: {
+                Image(systemName: "xmark")
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundStyle(Theme.text2)
+                    .frame(width: 34, height: 34)
+                    .background(Theme.surface)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .stroke(Theme.border, lineWidth: 1)
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            }
+        }
+        .padding(.bottom, 4)
+    }
+
+    // MARK: - Champ Tag (dropdown custom)
+
+    private var tagField: some View {
+        Field(label: "Tag") {
+            VStack(spacing: 0) {
+                Button {
+                    withAnimation(.easeInOut(duration: 0.18)) { showCategories.toggle() }
+                } label: {
+                    HStack(spacing: 9) {
+                        if let tag = viewModel.selectedTag {
+                            RoundedRectangle(cornerRadius: 3)
+                                .fill(ExpenseCategory.meta(for: tag.label).color)
+                                .frame(width: 10, height: 10)
+                            Text(tag.label)
+                                .font(Theme.font(14.5, .bold))
+                                .foregroundStyle(Theme.text)
+                        } else {
+                            Text("Sélectionner un tag")
+                                .font(Theme.font(14.5))
+                                .foregroundStyle(Theme.faint)
+                        }
+                        Spacer()
+                        Image(systemName: "chevron.down")
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundStyle(Theme.muted)
+                            .rotationEffect(.degrees(showCategories ? 180 : 0))
+                    }
+                    .padding(.horizontal, 13)
+                    .frame(height: 46)
+                    .background(Theme.surface)
+                    .overlay(roundedBorder)
+                    .clipShape(RoundedRectangle(cornerRadius: Theme.radiusSm, style: .continuous))
+                }
+
+                if showCategories {
+                    VStack(spacing: 2) {
+                        ForEach(Tag.allCases, id: \.self) { tag in
+                            Button {
+                                viewModel.selectedTag = tag
+                                withAnimation(.easeInOut(duration: 0.18)) { showCategories = false }
+                            } label: {
+                                HStack(spacing: 10) {
+                                    IconCircle(cat: tag.label, size: 28)
+                                    Text(tag.label)
+                                        .font(Theme.font(14, .bold))
+                                        .foregroundStyle(Theme.text)
+                                    Spacer()
+                                }
+                                .padding(10)
+                                .background(viewModel.selectedTag == tag ? Theme.accentSoft : .clear)
+                                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                            }
+                        }
+                    }
+                    .padding(6)
+                    .background(Theme.surface)
+                    .overlay(roundedBorder)
+                    .clipShape(RoundedRectangle(cornerRadius: Theme.radiusSm, style: .continuous))
+                    .padding(.top, 6)
+                }
+            }
+        }
+    }
+
+    // MARK: - Champ Date
+
+    private var dateField: some View {
+        Field(label: "Date") {
+            VStack(spacing: 0) {
+                Button {
+                    withAnimation(.easeInOut(duration: 0.18)) { showDatePicker.toggle() }
+                } label: {
+                    HStack {
+                        Text(viewModel.dateDisplay)
+                            .font(Theme.font(14.5))
+                            .foregroundStyle(Theme.text2)
+                        Spacer()
+                        Image(systemName: "calendar")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundStyle(Theme.muted)
+                    }
+                    .padding(.horizontal, 13)
+                    .frame(height: 46)
+                    .background(Theme.surfaceAlt)
+                    .overlay(roundedBorder)
+                    .clipShape(RoundedRectangle(cornerRadius: Theme.radiusSm, style: .continuous))
+                }
+
+                if showDatePicker {
+                    DatePicker("", selection: $viewModel.date, displayedComponents: .date)
+                        .datePickerStyle(.graphical)
+                        .labelsHidden()
+                        .tint(Theme.accent)
+                        .padding(8)
+                        .background(Theme.surface)
+                        .overlay(roundedBorder)
+                        .clipShape(RoundedRectangle(cornerRadius: Theme.radiusSm, style: .continuous))
+                        .padding(.top, 6)
+                }
+            }
+        }
+    }
+
+    // MARK: - Champ Montant
+
+    private var amountField: some View {
+        Field(label: "Montant") {
+            HStack(spacing: 0) {
+                Text("€")
+                    .font(Theme.font(15, .heavy))
+                    .foregroundStyle(Theme.accentDark)
+                    .frame(width: 40, height: 46)
+                    .background(Theme.accentSoft)
+                TextField("0", text: $viewModel.amountText)
+                    .font(Theme.font(14.5, .bold))
+                    .foregroundStyle(Theme.text)
+                    .keyboardType(.decimalPad)
+                    .padding(.horizontal, 12)
+                    .frame(height: 46)
+            }
+            .background(Theme.surface)
+            .overlay(roundedBorder)
+            .clipShape(RoundedRectangle(cornerRadius: Theme.radiusSm, style: .continuous))
+        }
+    }
+
+    // MARK: - Boutons
+
+    private var buttons: some View {
+        HStack(spacing: 10) {
+            Button { dismiss() } label: {
+                Text("Annuler")
+                    .font(Theme.font(15, .bold))
+                    .foregroundStyle(Theme.text2)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 13)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: Theme.radiusSm, style: .continuous)
+                            .stroke(Theme.border, lineWidth: 1)
+                    )
+            }
+
+            Button {
+                Task {
+                    let ok = await viewModel.submit()
+                    if ok {
+                        appState.notifyDataChanged()
+                        dismiss()
+                    }
+                }
+            } label: {
+                Group {
+                    if viewModel.isSubmitting {
+                        ProgressView().tint(.white)
+                    } else {
+                        Text(viewModel.isIncome ? "Ajouter l'entrée" : "Créer la dépense")
+                            .font(Theme.font(15, .bold))
+                    }
+                }
+                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 13)
+                .background(Theme.accent)
+                .clipShape(RoundedRectangle(cornerRadius: Theme.radiusSm, style: .continuous))
+            }
+            .frame(maxWidth: .infinity)
+            .opacity(viewModel.isValid ? 1 : 0.5)
+            .disabled(!viewModel.isValid || viewModel.isSubmitting)
+        }
+    }
+
+    private var roundedBorder: some View {
+        RoundedRectangle(cornerRadius: Theme.radiusSm, style: .continuous)
+            .stroke(Theme.border, lineWidth: 1)
+    }
+}
+
+/// Libellé de champ (uppercase, gris) + contenu.
+private struct Field<Content: View>: View {
+    let label: String
+    @ViewBuilder var content: Content
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(label.uppercased())
+                .font(Theme.font(10.5, .heavy))
+                .tracking(0.5)
+                .foregroundStyle(Theme.muted)
+            content
+        }
+    }
+}
