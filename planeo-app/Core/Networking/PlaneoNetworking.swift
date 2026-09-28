@@ -9,8 +9,10 @@ import Foundation
 
 // MARK: - Auth
 
+// Le gateway ne renvoie plus de JWT : uniquement l'utilisateur, la session est dans un cookie.
 struct LoginResponse: Decodable {
-    let accessToken: String
+    let username: String
+    let role: String
 }
 
 // MARK: - Balance

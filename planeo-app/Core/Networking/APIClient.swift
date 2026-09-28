@@ -27,10 +27,6 @@ final class APIClient {
         req.httpMethod = endpoint.method
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        if let token = AuthManager.shared.token {
-            req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        }
-
         if let body = endpoint.body {
             req.httpBody = try JSONEncoder().encode(AnyEncodable(body))
         }
@@ -44,6 +40,16 @@ final class APIClient {
         }
 
         return try decoder.decode(T.self, from: data)
+    }
+
+    /// Ferme la session côté gateway (best effort) et purge le cookie local.
+    func logout() async {
+        if let url = URL(string: baseURL.absoluteString + "/auth/logout") {
+            var req = URLRequest(url: url)
+            req.httpMethod = "POST"
+            _ = try? await URLSession.shared.data(for: req)
+        }
+        HTTPCookieStorage.shared.cookies(for: baseURL)?.forEach(HTTPCookieStorage.shared.deleteCookie)
     }
 }
 
