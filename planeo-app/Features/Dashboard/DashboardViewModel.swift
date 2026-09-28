@@ -10,7 +10,8 @@ import Observation
     var balance: BalanceDTO?
     var expenses: [Expense] = []
     var monthlyData: [ExpensePerMonthDTO] = []
-    var tagAmounts: [ExpenseAmountByTagDTO] = []
+    var categoryAmounts: [ExpenseAmountByCategoryDTO] = []
+    var accounts: [Account] = []
     var isLoading = false
     var error: String?
 
@@ -29,14 +30,14 @@ import Observation
     }
 
     var donutSlices: [DonutChart.Slice] {
-        tagAmounts.enumerated().map { i, t in
-            .init(label: Tag.from(t.tag)?.label ?? t.tag,
+        categoryAmounts.enumerated().map { i, t in
+            .init(label: t.category.name,
                   value: t.total,
                   color: Format.donutColor(index: i))
         }
     }
 
-    var donutTotal: Double { tagAmounts.reduce(0) { $0 + $1.total } }
+    var donutTotal: Double { categoryAmounts.reduce(0) { $0 + $1.total } }
 
     func load() async {
         isLoading = true
@@ -46,13 +47,15 @@ import Observation
             async let bal: BalanceDTO              = APIClient.shared.request(.balance)
             async let exp: [ExpenseDTO]            = APIClient.shared.request(.expenses)
             async let month: [ExpensePerMonthDTO]  = APIClient.shared.request(.expenseMonth)
-            async let amount: [ExpenseAmountByTagDTO] = APIClient.shared.request(.expenseAmount)
+            async let amount: [ExpenseAmountByCategoryDTO] = APIClient.shared.request(.expenseAmountByCategory)
+            async let accs: [AccountDTO] = APIClient.shared.request(.accounts)
 
-            let (b, e, m, a) = try await (bal, exp, month, amount)
+            let (b, e, m, a, ac) = try await (bal, exp, month, amount, accs)
             balance = b
             expenses = e.map { $0.toExpense() }
             monthlyData = m
-            tagAmounts = a
+            categoryAmounts = a
+            accounts = ac.map { $0.toAccount() }
 
             // Mise à jour du cache widget
             SharedStore.save(BalanceSnapshot(

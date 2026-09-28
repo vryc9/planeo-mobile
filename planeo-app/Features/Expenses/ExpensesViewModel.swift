@@ -27,6 +27,24 @@ import Observation
         .sorted { $0.total > $1.total }
     }
 
+    func delete(_ e: Expense) async -> Bool {
+        guard let categoryId = e.categoryId else { return false }
+        let dto = ExpenseDTO(
+            id: e.id, amount: e.amount,
+            category: CategoryDTO(id: categoryId, name: e.cat, icon: e.catIcon),
+            status: e.status == .paid ? "PROCESSED" : "PENDING",
+            date: e.date, label: e.label, recurring: e.recurring, accountId: e.accountId
+        )
+        do {
+            try await APIClient.shared.send(.deleteExpense(body: dto))
+            expenses.removeAll { $0.id == e.id }
+            return true
+        } catch {
+            self.error = error.localizedDescription
+            return false
+        }
+    }
+
     func load() async {
         isLoading = true
         error = nil

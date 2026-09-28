@@ -13,6 +13,7 @@ struct AddExpenseView: View {
     @State private var viewModel = AddExpenseViewModel()
 
     @State private var showCategories = false
+    @State private var showNewCategory = false
     @State private var showDatePicker = false
     
     init(isIncome: Bool, presetDate: Date?) {
@@ -29,9 +30,10 @@ struct AddExpenseView: View {
 
                 if viewModel.isIncome {
                     incomeBanner
+                    accountField(label: "Banque à créditer")
                     amountField
                 } else {
-                    tagField
+                    categoryField
                     Field(label: "Libellé") {
                         TextField("Ex: Netflix", text: $viewModel.label)
                             .font(Theme.font(14.5))
@@ -45,6 +47,7 @@ struct AddExpenseView: View {
                         dateField
                         amountField
                     }
+                    accountField(label: "Banque")
                 }
 
                 if let error = viewModel.errorMessage {
@@ -59,6 +62,16 @@ struct AddExpenseView: View {
             .padding(.horizontal, 18)
             .padding(.top, 6)
             .padding(.bottom, 24)
+        }
+        .task { await viewModel.load() }
+        .sheet(isPresented: $showNewCategory) {
+            AddCategoryView { created in
+                Task {
+                    await viewModel.load()
+                    if let created { viewModel.selectedCategory = created }
+                }
+            }
+            .presentationDetents([.medium, .large])
         }
     }
 
@@ -126,24 +139,22 @@ struct AddExpenseView: View {
         .padding(.bottom, 4)
     }
 
-    // MARK: - Champ Tag (dropdown custom)
+    // MARK: - Champ Catégorie (dropdown custom)
 
-    private var tagField: some View {
-        Field(label: "Tag") {
+    private var categoryField: some View {
+        Field(label: "Catégorie") {
             VStack(spacing: 0) {
                 Button {
                     withAnimation(.easeInOut(duration: 0.18)) { showCategories.toggle() }
                 } label: {
                     HStack(spacing: 9) {
-                        if let tag = viewModel.selectedTag {
-                            RoundedRectangle(cornerRadius: 3)
-                                .fill(ExpenseCategory.meta(for: tag.label).color)
-                                .frame(width: 10, height: 10)
-                            Text(tag.label)
+                        if let category = viewModel.selectedCategory {
+                            IconCircle(cat: category.name, catIcon: category.icon, size: 24)
+                            Text(category.name)
                                 .font(Theme.font(14.5, .bold))
                                 .foregroundStyle(Theme.text)
                         } else {
-                            Text("Sélectionner un tag")
+                            Text("Sélectionner une catégorie")
                                 .font(Theme.font(14.5))
                                 .foregroundStyle(Theme.faint)
                         }
@@ -162,22 +173,36 @@ struct AddExpenseView: View {
 
                 if showCategories {
                     VStack(spacing: 2) {
-                        ForEach(Tag.allCases, id: \.self) { tag in
+                        ForEach(viewModel.categories) { category in
                             Button {
-                                viewModel.selectedTag = tag
+                                viewModel.selectedCategory = category
                                 withAnimation(.easeInOut(duration: 0.18)) { showCategories = false }
                             } label: {
                                 HStack(spacing: 10) {
-                                    IconCircle(cat: tag.label, size: 28)
-                                    Text(tag.label)
+                                    IconCircle(cat: category.name, catIcon: category.icon, size: 28)
+                                    Text(category.name)
                                         .font(Theme.font(14, .bold))
                                         .foregroundStyle(Theme.text)
                                     Spacer()
                                 }
                                 .padding(10)
-                                .background(viewModel.selectedTag == tag ? Theme.accentSoft : .clear)
+                                .background(viewModel.selectedCategory == category ? Theme.accentSoft : .clear)
                                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                             }
+                        }
+
+                        Button {
+                            withAnimation(.easeInOut(duration: 0.18)) { showCategories = false }
+                            showNewCategory = true
+                        } label: {
+                            HStack(spacing: 10) {
+                                IconCircle(icon: "plus", color: Theme.accentDark, bg: Theme.accentSoft, size: 28)
+                                Text("Nouvelle catégorie")
+                                    .font(Theme.font(14, .bold))
+                                    .foregroundStyle(Theme.accentDark)
+                                Spacer()
+                            }
+                            .padding(10)
                         }
                     }
                     .padding(6)
@@ -186,6 +211,22 @@ struct AddExpenseView: View {
                     .clipShape(RoundedRectangle(cornerRadius: Theme.radiusSm, style: .continuous))
                     .padding(.top, 6)
                 }
+            }
+        }
+    }
+
+    // MARK: - Champ Banque
+
+    private func accountField(label: String) -> some View {
+        Field(label: label) {
+            if viewModel.accounts.isEmpty {
+                Text("Aucune banque — ajoutez-en une depuis le menu Banques")
+                    .font(Theme.font(13))
+                    .foregroundStyle(Theme.muted)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .inputBox()
+            } else {
+                AccountPicker(accounts: viewModel.accounts, selection: $viewModel.selectedAccountId)
             }
         }
     }

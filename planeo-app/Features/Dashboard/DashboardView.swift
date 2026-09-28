@@ -14,6 +14,7 @@ struct DashboardView: View {
             VStack(spacing: 16) {
                 heroCard
                 kpiGrid
+                accountsCard
                 monthlyCard
                 categoryCard
                 recentCard
@@ -71,6 +72,53 @@ struct DashboardView: View {
             MiniKpi(icon: "creditcard",     label: "Dépenses",      value: "\(viewModel.expenses.count)")
             MiniKpi(icon: "calendar",       label: "En attente",    value: "\(viewModel.expenses.filter { $0.status == .pending }.count)")
             MiniKpi(icon: "checkmark.seal", label: "Payées",        value: "\(viewModel.expenses.filter { $0.status == .paid }.count)")
+        }
+    }
+
+    // MARK: - Banques
+
+    private var accountsCard: some View {
+        Card(padding: 0) {
+            VStack(spacing: 0) {
+                HStack {
+                    Text("Mes banques")
+                        .font(Theme.font(15, .heavy))
+                        .foregroundStyle(Theme.text)
+                    Spacer()
+                    Button {
+                        withAnimation { appState.select(.accounts) }
+                    } label: {
+                        Text("Gérer")
+                            .font(Theme.font(13, .semibold))
+                            .foregroundStyle(Theme.accentDark)
+                    }
+                }
+                .padding(16)
+
+                if viewModel.accounts.isEmpty {
+                    Text("Aucune banque")
+                        .font(Theme.font(13))
+                        .foregroundStyle(Theme.muted)
+                        .padding(.bottom, 24)
+                } else {
+                    ForEach(Array(viewModel.accounts.enumerated()), id: \.element.id) { i, a in
+                        if i > 0 { Divider().background(Theme.hair) }
+                        HStack(spacing: 11) {
+                            AccountLogo(logo: a.logo, label: a.label, size: 36)
+                            Text(a.label)
+                                .font(Theme.font(14, .bold))
+                                .foregroundStyle(Theme.text)
+                                .lineLimit(1)
+                            Spacer()
+                            Text(Format.eur(a.amount))
+                                .font(Theme.font(14, .heavy))
+                                .foregroundStyle(Theme.text)
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 11)
+                    }
+                }
+            }
         }
     }
 
@@ -170,7 +218,7 @@ struct DashboardView: View {
                     ForEach(Array(viewModel.recentExpenses.enumerated()), id: \.element.id) { i, e in
                         if i > 0 { Divider().background(Theme.hair) }
                         HStack(spacing: 11) {
-                            IconCircle(cat: e.cat, size: 36)
+                            IconCircle(cat: e.cat, catIcon: e.catIcon, size: 36)
                             VStack(alignment: .leading, spacing: 3) {
                                 Text(e.label)
                                     .font(Theme.font(14, .bold))

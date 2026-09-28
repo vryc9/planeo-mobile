@@ -140,7 +140,7 @@ struct CalendarView: View {
                 HStack(spacing: 2) {
                     ForEach(Array(events.prefix(3).enumerated()), id: \.offset) { _, e in
                         Circle()
-                            .fill(ExpenseCategory.meta(for: e.cat).color)
+                            .fill(ExpenseCategory.meta(for: e.cat, icon: e.catIcon).color)
                             .frame(width: 5, height: 5)
                     }
                 }
@@ -174,7 +174,7 @@ struct CalendarView: View {
                 ForEach(Array(expenses.enumerated()), id: \.element.id) { i, e in
                     if i > 0 { Divider().background(Theme.hair) }
                     HStack(spacing: 10) {
-                        IconCircle(cat: e.cat, size: 34)
+                        IconCircle(cat: e.cat, catIcon: e.catIcon, size: 34)
                         VStack(alignment: .leading, spacing: 3) {
                             Text(e.label)
                                 .font(Theme.font(13.5, .bold))
