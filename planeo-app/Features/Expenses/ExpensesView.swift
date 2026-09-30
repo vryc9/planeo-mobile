@@ -15,7 +15,7 @@ struct ExpensesView: View {
     enum Tab { case upcoming, past, byCategory }
     @State private var tab: Tab = .upcoming
     @State private var search = ""
-    @State private var expandedCategories: Set<UUID> = []
+    @State private var expandedCategories: Set<String> = []
 
     var body: some View {
         ScrollView {

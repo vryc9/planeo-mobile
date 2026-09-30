@@ -105,7 +105,7 @@ enum ExpenseCategory {
 // MARK: - CategoryGroup (Expenses screen)
 
 struct CategoryGroup: Identifiable {
-    let id = UUID()
+    var id: String { label }
     let label: String
     let expenses: [Expense]
     var count: Int { expenses.count }
