@@ -43,9 +43,12 @@ struct AddExpenseView: View {
                             .overlay(roundedBorder)
                             .clipShape(RoundedRectangle(cornerRadius: Theme.radiusSm, style: .continuous))
                     }
-                    HStack(spacing: 12) {
+                    HStack(alignment: .top, spacing: 12) {
                         dateField
                         amountField
+                    }
+                    if showDatePicker {
+                        datePickerPanel
                     }
                     accountField(label: "Banque")
                 }
@@ -235,39 +238,38 @@ struct AddExpenseView: View {
 
     private var dateField: some View {
         Field(label: "Date") {
-            VStack(spacing: 0) {
-                Button {
-                    withAnimation(.easeInOut(duration: 0.18)) { showDatePicker.toggle() }
-                } label: {
-                    HStack {
-                        Text(viewModel.dateDisplay)
-                            .font(Theme.font(14.5))
-                            .foregroundStyle(Theme.text2)
-                        Spacer()
-                        Image(systemName: "calendar")
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundStyle(Theme.muted)
-                    }
-                    .padding(.horizontal, 13)
-                    .frame(height: 46)
-                    .background(Theme.surfaceAlt)
-                    .overlay(roundedBorder)
-                    .clipShape(RoundedRectangle(cornerRadius: Theme.radiusSm, style: .continuous))
+            Button {
+                withAnimation(.easeInOut(duration: 0.18)) { showDatePicker.toggle() }
+            } label: {
+                HStack {
+                    Text(viewModel.dateDisplay)
+                        .font(Theme.font(14.5))
+                        .foregroundStyle(Theme.text2)
+                    Spacer()
+                    Image(systemName: "calendar")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(Theme.muted)
                 }
-
-                if showDatePicker {
-                    DatePicker("", selection: $viewModel.date, displayedComponents: .date)
-                        .datePickerStyle(.graphical)
-                        .labelsHidden()
-                        .tint(Theme.accent)
-                        .padding(8)
-                        .background(Theme.surface)
-                        .overlay(roundedBorder)
-                        .clipShape(RoundedRectangle(cornerRadius: Theme.radiusSm, style: .continuous))
-                        .padding(.top, 6)
-                }
+                .padding(.horizontal, 13)
+                .frame(height: 46)
+                .background(Theme.surfaceAlt)
+                .overlay(roundedBorder)
+                .clipShape(RoundedRectangle(cornerRadius: Theme.radiusSm, style: .continuous))
             }
         }
+    }
+
+    /// Calendrier affiché pleine largeur, hors de la rangée Date/Montant.
+    private var datePickerPanel: some View {
+        DatePicker("", selection: $viewModel.date, displayedComponents: .date)
+            .datePickerStyle(.graphical)
+            .labelsHidden()
+            .tint(Theme.accent)
+            .padding(8)
+            .frame(maxWidth: .infinity)
+            .background(Theme.surface)
+            .overlay(roundedBorder)
+            .clipShape(RoundedRectangle(cornerRadius: Theme.radiusSm, style: .continuous))
     }
 
     // MARK: - Champ Montant
