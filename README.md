@@ -10,7 +10,7 @@ Planeo est une application de gestion de budget et de dépenses, éditée par En
 
 Planeo ne collecte que les données que vous saisissez vous-même pour utiliser l'application :
 
-- **Compte** : adresse e-mail et identifiants de connexion.
+- **Compte** : identifiants de connexion.
 - **Informations financières saisies manuellement** : banques (nom, logo, solde), dépenses, entrées d'argent et virements entre vos comptes.
 - **Contenu libre** : libellés des dépenses et noms de catégories.
 
