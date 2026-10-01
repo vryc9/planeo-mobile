@@ -46,7 +46,7 @@ final class APIClient {
         guard let httpResponse = response as? HTTPURLResponse,
               (200..<300).contains(httpResponse.statusCode) else {
             let code = (response as? HTTPURLResponse)?.statusCode ?? -1
-            if code == 401 && !endpoint.isLogin {
+            if code == 401 && !endpoint.isCredentialCheck {
                 // Session expirée côté gateway : retour à l'écran de connexion
                 AuthManager.shared.isAuthenticated = false
             }
@@ -54,6 +54,11 @@ final class APIClient {
             throw APIError.httpError(code)
         }
         return data
+    }
+
+    /// Purge le cookie de session local (la session serveur est déjà fermée).
+    func clearSessionCookies() {
+        HTTPCookieStorage.shared.cookies(for: baseURL)?.forEach(HTTPCookieStorage.shared.deleteCookie)
     }
 
     /// Ferme la session côté gateway (best effort) et purge le cookie local.
