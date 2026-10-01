@@ -21,6 +21,15 @@ import Observation
         isAuthenticated = true
     }
 
+    /// Suppression définitive du compte : re-confirmation du mot de passe, puis DELETE.
+    /// Le gateway ferme la session lui-même en cas de succès.
+    func deleteAccount(password: String) async throws {
+        try await APIClient.shared.send(.reauth(password: password))
+        try await APIClient.shared.send(.deleteAccount)
+        APIClient.shared.clearSessionCookies()
+        isAuthenticated = false
+    }
+
     func logout() {
         isAuthenticated = false
         Task { await APIClient.shared.logout() }

@@ -7,6 +7,8 @@ import Foundation
 
 enum APIEndpoint {
     case login(username: String, password: String)
+    case reauth(password: String)
+    case deleteAccount
     case balance
     case deposit(body: DepositRequest)
     case expenses
@@ -27,9 +29,19 @@ enum APIEndpoint {
         return false
     }
 
+    /// Un 401 sur ces endpoints = mauvais mot de passe, pas une session expirée.
+    var isCredentialCheck: Bool {
+        switch self {
+        case .login, .reauth: return true
+        default:              return false
+        }
+    }
+
     var path: String {
         switch self {
         case .login:                   return "/auth/login"   // pas de préfixe /api
+        case .reauth:                  return "/auth/reauth"
+        case .deleteAccount:           return "/api/me/account"
         case .balance, .deposit:       return "/api/balance"
         case .expenses, .createExpense, .deleteExpense: return "/api/expense"
         case .expenseMonth:            return "/api/expense/month"
@@ -43,9 +55,9 @@ enum APIEndpoint {
 
     var method: String {
         switch self {
-        case .login, .createExpense, .createAccounts, .transfer, .createCategory: return "POST"
+        case .login, .reauth, .createExpense, .createAccounts, .transfer, .createCategory: return "POST"
         case .deposit:                                                            return "PUT"
-        case .deleteExpense, .deleteCategory:                                     return "DELETE"
+        case .deleteExpense, .deleteCategory, .deleteAccount:                     return "DELETE"
         default:                                                                  return "GET"
         }
     }
@@ -53,6 +65,7 @@ enum APIEndpoint {
     var body: Encodable? {
         switch self {
         case .login(let u, let p):    return LoginRequest(username: u, password: p)
+        case .reauth(let p):          return ReauthRequest(password: p)
         case .deposit(let b):         return b
         case .createExpense(let b):   return b
         case .deleteExpense(let b):   return b
@@ -67,5 +80,9 @@ enum APIEndpoint {
 
 struct LoginRequest: Encodable {
     let username: String
+    let password: String
+}
+
+struct ReauthRequest: Encodable {
     let password: String
 }

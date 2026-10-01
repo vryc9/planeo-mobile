@@ -10,6 +10,7 @@ import SwiftUI
 struct SideDrawer: View {
     @Environment(AppState.self) private var appState
     let width: CGFloat
+    @State private var showDeleteAccount = false
 
     var body: some View {
         ZStack(alignment: .leading) {
@@ -117,6 +118,20 @@ struct SideDrawer: View {
                 .clipShape(RoundedRectangle(cornerRadius: Theme.radiusSm, style: .continuous))
                 .padding(12)
             }
+
+            Button {
+                showDeleteAccount = true
+            } label: {
+                Text("Supprimer mon compte")
+                    .font(Theme.font(12.5, .semibold))
+                    .foregroundStyle(.red)
+                    .frame(maxWidth: .infinity)
+                    .padding(.bottom, 28)
+            }
+        }
+        .sheet(isPresented: $showDeleteAccount) {
+            DeleteAccountView()
+                .presentationDetents([.medium])
         }
     }
 
