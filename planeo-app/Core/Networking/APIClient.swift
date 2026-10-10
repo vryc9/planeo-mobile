@@ -11,6 +11,25 @@ final class APIClient {
 
     private let baseURL = URL(string: "https://planeo.duckdns.org")!
 
+    // Au tout premier lancement (installation neuve), le réseau n'est parfois pas encore prêt :
+    // avec URLSession.shared la requête échoue aussitôt (-1009/-1003…) sans jamais partir.
+    // `waitsForConnectivity` la met en attente au lieu d'échouer. Les cookies restent ceux de
+    // HTTPCookieStorage.shared (comportement par défaut d'une configuration .default).
+    private let session: URLSession = {
+        let config = URLSessionConfiguration.default
+        config.waitsForConnectivity = true
+        config.timeoutIntervalForRequest = 30
+        config.timeoutIntervalForResource = 60
+        return URLSession(configuration: config)
+    }()
+
+    /// Erreurs réseau où la requête n'a (très probablement) pas abouti : un nouvel essai est sûr.
+    private static let transientErrors: Set<URLError.Code> = [
+        .notConnectedToInternet, .networkConnectionLost, .cannotFindHost,
+        .cannotConnectToHost, .dnsLookupFailed, .timedOut, .secureConnectionFailed,
+        .dataNotAllowed, .internationalRoamingOff
+    ]
+
     private let decoder: JSONDecoder = {
         let d = JSONDecoder()
         d.keyDecodingStrategy = .convertFromSnakeCase
@@ -41,7 +60,13 @@ final class APIClient {
             req.httpBody = try JSONEncoder().encode(AnyEncodable(body))
         }
 
-        let (data, response) = try await URLSession.shared.data(for: req)
+        let data: Data
+        let response: URLResponse
+        do {
+            (data, response) = try await self.data(for: req)
+        } catch let error as URLError {
+            throw APIError.network(error.errorCode)
+        }
 
         guard let httpResponse = response as? HTTPURLResponse,
               (200..<300).contains(httpResponse.statusCode) else {
@@ -56,12 +81,27 @@ final class APIClient {
         return data
     }
 
+    /// Jusqu'à 3 essais sur erreur réseau transitoire (la requête n'a pas atteint le serveur).
+    private func data(for req: URLRequest) async throws -> (Data, URLResponse) {
+        let maxAttempts = 3
+        var attempt = 1
+        while true {
+            do {
+                return try await session.data(for: req)
+            } catch let error as URLError where attempt < maxAttempts
+                        && Self.transientErrors.contains(error.code) {
+                try await Task.sleep(for: .seconds(Double(attempt)))
+                attempt += 1
+            }
+        }
+    }
+
     /// Ferme la session côté gateway (best effort) et purge le cookie local.
     func logout() async {
         if let url = URL(string: baseURL.absoluteString + "/auth/logout") {
             var req = URLRequest(url: url)
             req.httpMethod = "POST"
-            _ = try? await URLSession.shared.data(for: req)
+            _ = try? await session.data(for: req)
         }
         HTTPCookieStorage.shared.cookies(for: baseURL)?.forEach(HTTPCookieStorage.shared.deleteCookie)
     }
@@ -77,11 +117,13 @@ private struct AnyEncodable: Encodable {
 enum APIError: LocalizedError {
     case httpError(Int)
     case server(String)
+    case network(Int)
 
     var errorDescription: String? {
         switch self {
         case .httpError(let code): return "Erreur HTTP \(code)"
         case .server(let message): return message
+        case .network(let code): return "Connexion impossible (réseau \(code))"
         }
     }
 

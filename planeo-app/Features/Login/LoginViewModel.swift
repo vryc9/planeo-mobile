@@ -25,8 +25,17 @@ import Observation
         do {
             try await AuthManager.shared.login(username: username, password: password)
             return true
-        } catch {
+        } catch APIError.httpError(let code) where code == 401 || code == 403 {
             errorMessage = "Identifiants incorrects"
+            return false
+        } catch APIError.network(let code) {
+            errorMessage = "Connexion impossible, réessaie (réseau \(code))"
+            return false
+        } catch APIError.httpError(let code) {
+            errorMessage = "Serveur indisponible, réessaie (HTTP \(code))"
+            return false
+        } catch {
+            errorMessage = "Erreur inattendue, réessaie (\(error.localizedDescription))"
             return false
         }
     }
